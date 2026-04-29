@@ -6,9 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="238488c9-e434-4cc5-97df-d7c8513fc8d6" name="Changes" comment=".">
       <changelist_data name="sitta250" email="" automatic="false" />
-      <change afterPath="$PROJECT_DIR$/jobs/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jobs/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/jobs/config.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,7 +79,7 @@
       <updated>1777387879217</updated>
       <workItem from="1777387880245" duration="3308000" />
       <workItem from="1777448122197" duration="7910000" />
-      <workItem from="1777476214765" duration="7020000" />
+      <workItem from="1777476214765" duration="9899000" />
     </task>
     <task id="LOCAL-00001" summary="docker file setup">
       <option name="closed" value="true" />

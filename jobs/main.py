@@ -1,6 +1,7 @@
 import os
 import random
 import uuid
+import time
 
 from confluent_kafka import SerializingProducer
 import simplejson as json
@@ -123,6 +124,7 @@ def produce_data_to_kafka(producer, topic, data):
         value = json.dumps(data, default=json_serializer).encode('utf-8'),
         on_delivery=delivery_report
     )
+    producer.flush()
 
 
 def simulate_journey(producer, device_id):
@@ -138,11 +140,7 @@ def simulate_journey(producer, device_id):
             print('Vehicle has reached Birmingham. Simulation ending...')
             break
 
-        print(vehicle_data)
-        print(gps_data)
-        print(traffic_camera_data)
-        print(weather_data)
-        print(emergency_incident_data)
+
 
         produce_data_to_kafka(producer, VEHICLE_TOPIC, vehicle_data)
         produce_data_to_kafka(producer, GPS_TOPIC, gps_data)
@@ -150,8 +148,7 @@ def simulate_journey(producer, device_id):
         produce_data_to_kafka(producer, WEATHER_TOPIC, weather_data)
         produce_data_to_kafka(producer, EMERGENCY_TOPIC, emergency_incident_data)
 
-        producer.flush()
-        break
+        time.sleep(5)
 
 if __name__ == '__main__':
     producer_config  = {
