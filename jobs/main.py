@@ -32,11 +32,12 @@ def get_next_time():
     start_time += timedelta(seconds=random.randint(30, 60))
     return start_time
 
-def generate_gps_data(device_id, timestamp, vehicle_type='private'):
+def generate_gps_data(device_id, timestamp, location, vehicle_type='private'):
     return{
         'id':uuid.uuid4(),
         'device_id': device_id,
         'timestamp': timestamp,
+        'location': location,
         'speed': random.uniform(0, 40),
         'direction': 'North-East',
         'vehicle_type':vehicle_type
@@ -130,13 +131,13 @@ def produce_data_to_kafka(producer, topic, data):
 def simulate_journey(producer, device_id):
     while True:
         vehicle_data = generate_vehicle_data(device_id)
-        gps_data = generate_gps_data(device_id, vehicle_data['timestamp'])
+        gps_data = generate_gps_data(device_id, vehicle_data['timestamp'], vehicle_data['location'])
         traffic_camera_data = generate_traffic_camera_data(device_id, vehicle_data['timestamp'],
                                                     vehicle_data['location'], camera_id='Nikon-Cam123')
         weather_data = generate_weather_data(device_id, vehicle_data['timestamp'], vehicle_data['location'])
         emergency_incident_data = generate_emergency_incident_data(device_id,  vehicle_data['timestamp'], vehicle_data['location'])
 
-        if(vehicle_data['location'][0] >= BIRMINGHAM_COORDINATE['latitude'] and vehicle_data['location'][0]<= BIRMINGHAM_COORDINATE['longitude']):
+        if vehicle_data['location'][0] >= BIRMINGHAM_COORDINATE['latitude'] and vehicle_data['location'][1]<= BIRMINGHAM_COORDINATE['longitude']:
             print('Vehicle has reached Birmingham. Simulation ending...')
             break
 
@@ -148,7 +149,7 @@ def simulate_journey(producer, device_id):
         produce_data_to_kafka(producer, WEATHER_TOPIC, weather_data)
         produce_data_to_kafka(producer, EMERGENCY_TOPIC, emergency_incident_data)
 
-        time.sleep(5)
+        time.sleep(3)
 
 if __name__ == '__main__':
     producer_config  = {
